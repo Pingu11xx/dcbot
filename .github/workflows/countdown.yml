@@ -1,0 +1,28 @@
+name: Discord Countdown
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo letöltése
+        uses: actions/checkout@v4
+
+      - name: Python beállítás
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Könyvtárak telepítése
+        run: pip install -r requirements.txt
+
+      - name: Bot futtatása
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+        run: python dcbot.py

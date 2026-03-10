@@ -1,32 +1,37 @@
-import discord
-import asyncio
 import os
-from discord.ext import tasks
-from datetime import datetime, date
+import discord
+from datetime import date
 
-TOKEN = os.getenv("DISCORD_TOKEN")  # ide a bot tokenje
-CHANNEL_ID = int(os.getenv("CHANNEL_ID")) # ide a csatorna ID
+TOKEN = os.getenv("DISCORD_TOKEN")
+CHANNEL_ID = os.getenv("CHANNEL_ID")
+
 if not TOKEN:
     raise ValueError("DISCORD_TOKEN nincs beállítva")
 if not CHANNEL_ID:
     raise ValueError("CHANNEL_ID nincs beállítva")
+
+CHANNEL_ID = int(CHANNEL_ID)
+
 # céldátum
 TARGET_DATE = date(2026, 4, 12)
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 
-@tasks.loop(hours=24)
-async def countdown():
-    today = date.today()
-    remaining = (TARGET_DATE - today).days
-    
-    channel = client.get_channel(CHANNEL_ID)
-    await channel.send(f"⏳ {remaining} nap van hátra! @everyone")
-
 @client.event
 async def on_ready():
     print(f"Bejelentkezve mint {client.user}")
-    countdown.start()
+
+    today = date.today()
+    remaining = (TARGET_DATE - today).days
+
+    try:
+        channel = await client.fetch_channel(CHANNEL_ID)
+        await channel.send(f"⏳ {remaining} nap van hátra! @everyone")
+        print("Üzenet elküldve.")
+    except Exception as e:
+        print(f"Hiba történt: {e}")
+    finally:
+        await client.close()
 
 client.run(TOKEN)

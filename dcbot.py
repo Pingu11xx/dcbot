@@ -22,7 +22,7 @@ async def countdown():
     remaining = (TARGET_DATE - today).days
     
     channel = client.get_channel(CHANNEL_ID)
-    await channel.send(f"⏳ {remaining} nap van hátra!")
+    await channel.send(f"⏳ {remaining} nap van hátra! @everyone")
 
 @client.event
 async def on_ready():

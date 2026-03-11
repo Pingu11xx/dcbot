@@ -2,7 +2,7 @@ name: Discord Countdown
 
 on:
   schedule:
-    - cron: "29 6 * * *"
+    - cron: "*/10 * * * *"  # 10 percenként
   workflow_dispatch:
 
 jobs:

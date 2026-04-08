@@ -27,8 +27,19 @@ async def on_ready():
 
     try:
         channel = await client.fetch_channel(CHANNEL_ID)
-        await channel.send(f"⏳ {remaining} nap van hátra! @everyone")
+
+        if remaining == 1:
+            message = "⏳ Holnap van a céldátum! @everyone"
+        elif remaining > 1:
+            message = f"⏳ {remaining} nap van hátra! @everyone"
+        elif remaining == 0:
+            message = "🎉 Ma van a céldátum! @everyone"
+        else:
+            message = "⚠️ A céldátum már elmúlt."
+
+        await channel.send(message)
         print("Üzenet elküldve.")
+
     except Exception as e:
         print(f"Hiba történt: {e}")
     finally:

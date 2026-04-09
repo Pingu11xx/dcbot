@@ -33,7 +33,7 @@ async def on_ready():
         elif remaining > 1:
             message = f"⏳ {remaining} nap van hátra! @everyone"
         elif remaining == 0:
-            message = "🎉 Ma van a céldátum! @everyone"
+            message = "🎉 Ma van a választás ti kis gecik! @everyone"
         else:
             message = "⚠️ A céldátum már elmúlt."
 

@@ -29,7 +29,7 @@ async def on_ready():
         channel = await client.fetch_channel(CHANNEL_ID)
 
         if remaining == 1:
-            message = "⏳ Holnap van a céldátum! @everyone"
+            message = "⏳ Holnap van a választás MINDENKI készüljön fel! VÉGE VAN KICSI! @everyone"
         elif remaining > 1:
             message = f"⏳ {remaining} nap van hátra! @everyone"
         elif remaining == 0:
